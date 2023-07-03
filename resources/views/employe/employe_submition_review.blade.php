@@ -5,7 +5,8 @@
 
        
      {{-- @livewire('employe.employe-submition-review');  --}}
-     @livewire('employe.employe-submition-review',['post' =>$post]);
+     {{-- @livewire('employe.employe-submition-review',['post' =>$post]); --}}
+     @livewire('employe.show-posts',['post' =>$post]);
 
        
 

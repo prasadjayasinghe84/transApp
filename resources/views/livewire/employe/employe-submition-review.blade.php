@@ -182,7 +182,83 @@
             <x-form.input type="text" :label="__('15.Divisional Secretariat:')" wire:mode="selectedDSDivision">
                 {{ $selectedDSDivision }}
             </x-form.input>
+{{---//////////////////////////////////////////////////////////////////////////// --}}
 
+<div x-data="{ 'showModal': false }" @keydown.escape="showModal = false">
+    <button type="button" wire:click="editLocation()" @click="showModal = true"
+        class="z-[2] inline-block rounded-r bg-orange-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:z-[3] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+        data-te-ripple-init>
+        Change
+    </button>
+{{-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// --}}
+<div
+class="fixed top-0 left-0 right-0 z-50 inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
+x-show="showModal"
+>
+{{---//////////////////////////////////////////////////////////////////////////// --}}
+
+ {{----//////////////////////////////////--}}
+ <div class="relative w-full max-w-md max-h-full">
+    <!-- Modal inner -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+        </button>
+        <div class="px-6 py-6 lg:px-8">
+            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Edit City</h3>
+            <form class="space-y-6">
+                <div class="rounded-md shadow-sm">
+                    <select wire:model="selectedDirector" 
+                        class="block w-full dark:bg-gray-500 dark:text-gray-200 dark:placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm">
+                        <option value="" selected>Select Ditector Section</option>
+                        @if (!is_null($provinces))
+                        @foreach ($provinces as $province)
+                            <option value="{{ $province->id }}">{{ $province-> name }}
+                            </option>
+                        @endforeach
+                        @endif
+                    </select>
+               
+                </div>
+                <div class="rounded-md shadow-sm">
+                    <select wire:model="selectedSubUnitSection" 
+                        class="block w-full dark:bg-gray-500 dark:text-gray-200 dark:placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm">
+                        @if (!is_null($districtss))
+                            <option value="" selected>Select Sub Section</option>
+                            <option value="134" >Not Relevent</option>
+                             @foreach ($districtss as $district)
+                                <option value="{{ $district->id }}">{{ $district->name }}
+                                </option>
+                            @endforeach
+ 
+                        @endif
+                    </select>
+                 
+                </div>
+                <div class="rounded-md shadow-sm">
+                    <select wire:model="selectedSubSection" id="selectedSubSection" name="selectedSubSection"
+                        class="block w-full dark:bg-gray-500 dark:text-gray-200 dark:placeholder-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-light-blue-500 focus:border-light-blue-500 sm:text-sm">
+                        @if (!is_null($DSDivisions))
+                            <option value="" selected>Select Sub Unit</option>
+                            <option value="134" >Not Relevent</option>
+                            @foreach ($DSDivisions as $DSDivision)
+                                <option value="{{ $DSDivision->id }}">{{ $DSDivision->name }}
+                                </option>
+                            @endforeach
+                        @endif
+
+                    </select>
+                    @error('selectedSubSection')
+                        <p class="error">{{ $message }}</p>
+                    @enderror
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+   {{-- --//////////////////////////////////--}}
         </x-form.group>
         <x-form.group :label="__('16. Family Information')">
             <table class="w-full text-sm text-left text-slate-500">

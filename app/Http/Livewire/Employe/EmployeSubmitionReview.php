@@ -27,7 +27,7 @@ class EmployeSubmitionReview extends Component
     public $employeLeaveRecords, $employeFamilyDetails, $employeWorkDetails, $employeServiceRecords, $employeMarkesDetail, $transerRequests, $reasons;
     public $director_sections;
     public $sub_unit_sections;
-    public $sub_sections, $provinces, $districts, $DSDivisions, $name_with_initials,
+    public $sub_sections, $provinces, $districtss, $DSDivisions, $name_with_initials,
         $name_other_language, $name_donoted_initials, $nic, $tel_number_mobile, $tel_number_whatsapp, $email, $date_of_birth, $age_year,
         $age_month, $gender, $civil_states, $address_perment, $address_temp, $city,
         $selectedSalary, $selectedDesignation, $class, $appoiment_number, $appoiment_date,
@@ -47,6 +47,7 @@ class EmployeSubmitionReview extends Component
     public $showModalname = false;
     public function render()
     {
+        
         return view('livewire.employe.employe-submition-review');
     }
 
@@ -55,7 +56,7 @@ class EmployeSubmitionReview extends Component
     public function mount()
 
     {
-       // $this->provinces = Province::all();
+       
         $employeDetails = EmployeDetail::where('id', $this->post)->first();
         $this->name_with_initials = $employeDetails->name_with_initials;
         $this->name_other_language = $employeDetails->name_other_language;
@@ -76,10 +77,12 @@ class EmployeSubmitionReview extends Component
 
         $this->selectedProvince = $employeDetails->province->name;
         $this->selectedDistrict = $employeDetails->district->name;
-        //  $this->districts = District::where('province_id', $this->selectedProvince)->get();
-        //  $this->DSDivisions = DSDivision::where('district_Id', $this->selectedDistrict)->get();
-
         $this->selectedDSDivision = $employeDetails->dSDivision->name;
+         $this->provinces = Province::all();
+         $this->districtss = District::where('province_id', $this->selectedProvince)->get();
+          $this->DSDivisions = DSDivision::where('district_Id', $this->selectedDistrict)->get();
+
+       
 
         $this->employeFamilyDetails = EmployeFamilyDetail::where('employe_details_id', $this->post)->get();
         $employeWorkDetails = EmployeWorkDetail::where('employe_detail_id',$this->post)->first();
@@ -145,6 +148,11 @@ class EmployeSubmitionReview extends Component
     {
        //return redirect('employe/employe_work')->with('employe',$id);
         return redirect(route('employe.pdfDownload', $this->post));
+        
+    }
+
+    public function editLocation(){
+
         
     }
     
